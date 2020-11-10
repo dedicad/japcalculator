@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { CSSProperties } from "@material-ui/styles";
 import { CustomTheme } from "../../style/theme";
@@ -55,6 +55,16 @@ export const CalculatorPage: React.FC<Props> = (props: Props) => {
     return acc + values[itemName].kcal;
   }, 0);
 
+  const [buttonStyle, setButtonStyle] = useState("white")
+
+  useEffect(()=> {
+    if (result > 2000){
+      setButtonStyle("red")
+    } else {
+      setButtonStyle("white")
+    }
+  }, [result])
+
   return (
     <div className={classes.container}>
       <div className={classes.calculatorContainer}>
@@ -78,7 +88,7 @@ export const CalculatorPage: React.FC<Props> = (props: Props) => {
             </div>
           </div>
           <div className={classes.buttonContainer}>
-            <Button variant="contained" onClick={sendData(result)}>
+            <Button variant="contained" onClick={sendData(result)} style={{color: buttonStyle}}>
               {result} Kcal
             </Button>
           </div>
